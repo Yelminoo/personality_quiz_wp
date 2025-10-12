@@ -5,22 +5,55 @@ import { submitQuiz } from "../api/submitQuiz";
 const questions: Question[] = [
   {
     id: 1,
-    text: "Do you prefer working in teams?",
-    options: ["Yes", "No", "Sometimes"],
-    multiple: false
+    text: "How are you feeling lately, deep inside? (choose up to 2)",
+    options: [
+      "I'm going through big changes.",
+      "I feel powerful and ready to act.",
+      "I feel emotional or healing.",
+      "I feel clear and focused.",
+      "I feel stuck and want something to shift.",
+      "I feel spiritual and seeking answers."
+    ],
+    multiple: true,
+    maxSelections: 2
   },
   {
     id: 2,
-    text: "Which traits describe you?",
-    options: ["Creative", "Analytical", "Empathic", "Leader"],
-    multiple: true
+    text: "What's most important to you right now? (choose 1)",
+    options: [
+      "Freedom & self-expression",
+      "Relationships & connection",
+      "Success & growth",
+      "Understanding myself",
+      "Starting over / Healing",
+      "Spiritual guidance"
+    ],
+    multiple: false
   },
   {
     id: 3,
-    text: "Do you like leading projects?",
-    options: ["Yes", "No"],
-    multiple: false,
-    showIf: (answers) => answers[2]?.includes("Leader")
+    text: "Which phrase resonates with you most? (choose 1)",
+    options: [
+      "I want to rise stronger from what I've faced.",
+      "I want to love without fear.",
+      "I want to shine and be seen.",
+      "I want to understand my purpose.",
+      "I want to let go and move on.",
+      "I want to start a new chapter."
+    ],
+    multiple: false
+  },
+  {
+    id: 4,
+    text: "Which shape/style are you most drawn to? (choose 1)",
+    options: [
+      "Geometric & clean",
+      "Smooth & round",
+      "Spiral / layered",
+      "Sharp & radiant",
+      "Nature-inspired"
+    ],
+    multiple: false
   }
 ];
 
@@ -30,13 +63,20 @@ export default function PersonalityForm() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (qId: number, option: string, multiple: boolean) => {
+  const handleChange = (qId: number, option: string, multiple: boolean, maxSelections?: number) => {
     setAnswers(prev => {
       const current = prev[qId] || [];
       if (multiple) {
-        return current.includes(option)
-          ? { ...prev, [qId]: current.filter(o => o !== option) }
-          : { ...prev, [qId]: [...current, option] };
+        if (current.includes(option)) {
+          // Remove the option if already selected
+          return { ...prev, [qId]: current.filter(o => o !== option) };
+        } else {
+          // Add the option if not selected, but check max limit
+          if (maxSelections && current.length >= maxSelections) {
+            return prev; // Don't add if max selections reached
+          }
+          return { ...prev, [qId]: [...current, option] };
+        }
       } else {
         return { ...prev, [qId]: [option] };
       }
@@ -67,9 +107,12 @@ export default function PersonalityForm() {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-purple-400 via-pink-400 to-red-400 p-6">
+    <div className="flex items-center justify-center min-h-screen bg-yellow-600 p-6">
       <div className="w-full max-w-2xl bg-white/20 backdrop-blur-md border border-white/30 rounded-xl p-10 shadow-lg space-y-8">
-        <p className="text-3xl font-bold text-center text-white">Personality Quiz</p>
+        <div className="text-center">
+          <h1 className="text-3xl font-bold text-white mb-2">Discover Your NobArt Symbols</h1>
+          <p className="text-lg text-white/90 mb-6">Your soul carries meaning. Let us reveal the symbols you're here to wear.</p>
+        </div>
 
         {/* Email Section */}
         <div className="mb-6 p-4 rounded-lg">
@@ -97,10 +140,11 @@ export default function PersonalityForm() {
                       type={q.multiple ? "checkbox" : "radio"}
                       name={`q${q.id}`}
                       checked={(answers[q.id] || []).includes(opt)}
-                      onChange={() => handleChange(q.id, opt, q.multiple)}
-                      className="h-5 w-5 text-blue-400"
+                      onChange={() => handleChange(q.id, opt, q.multiple, q.maxSelections)}
+                      disabled={q.multiple && q.maxSelections ? !(answers[q.id] || []).includes(opt) && (answers[q.id] || []).length >= q.maxSelections : false}
+                      className="h-5 w-5 text-blue-400 disabled:opacity-50"
                     />
-                    <span className="text-white">{opt}</span>
+                    <span className={`text-white ${q.multiple && q.maxSelections && !(answers[q.id] || []).includes(opt) && (answers[q.id] || []).length >= q.maxSelections ? 'opacity-50' : ''}`}>{opt}</span>
                   </label>
                 ))}
               </div>
@@ -112,7 +156,7 @@ export default function PersonalityForm() {
         <button
           onClick={handleSubmit}
           disabled={loading}
-          className="w-full py-3 px-6 bg-blue-500/80 hover:bg-blue-600 text-white font-semibold rounded-lg shadow-md disabled:bg-gray-400/50"
+          className="w-full py-3 px-6 bg-yellow-500/80 hover:bg-gray-600 text-white font-semibold rounded-lg shadow-md disabled:bg-gray-400/50"
         >
           {loading ? "Submitting..." : "Submit"}
         </button>

@@ -1,14 +1,9 @@
 
-import PersonalityForm from './pages/PersonalityForm'
 import "./index.css"; 
-function App() {
+import AppRouter from './router';
 
-  return (
-    <>
-      
-      <PersonalityForm />
-    </>
-  )
+function App() {
+  return <AppRouter />;
 }
 
 export default App
