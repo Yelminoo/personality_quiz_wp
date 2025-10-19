@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import WhatThisQuizIs from '../pages/WhatThisQuizIs';
 import PersonalityForm from '../pages/PersonalityForm';
+import QuizResults from '../pages/QuizResults';
 import Layout from '../components/Layout';
 
 const router = createBrowserRouter([
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
       {
         path: 'quiz',
         element: <PersonalityForm />,
+      },
+      {
+        path: 'results',
+        element: <QuizResults answers={{}} />,
       },
       {
         path: 'about',

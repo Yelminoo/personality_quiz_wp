@@ -4,5 +4,6 @@ export interface Question {
   options: string[];
   multiple: boolean;
   maxSelections?: number;
+  isEmail?: boolean;
   showIf?: (answers: Record<number, string[]>) => boolean;
 }
