@@ -1,1 +1,51 @@
 @import "tailwindcss";
+
+/* Custom Color Theme - Pantone 276C, White, Soft Gold */
+:root {
+  --color-pantone-276c: #1E213D;
+  --color-pantone-276c-light: #3A4466;
+  --color-pantone-276c-dark: #141729;
+  --color-soft-gold: #D4A853;
+  --color-soft-gold-light: #E5C574;
+  --color-soft-gold-dark: #B8923A;
+  --color-white: #FFFFFF;
+  --color-off-white: #FAFAFA;
+}
+
+/* Custom Tailwind utilities for the theme */
+.bg-pantone-276c { background-color: var(--color-pantone-276c) !important; }
+.bg-pantone-276c-light { background-color: var(--color-pantone-276c-light) !important; }
+.bg-pantone-276c-dark { background-color: var(--color-pantone-276c-dark) !important; }
+.bg-soft-gold { background-color: var(--color-soft-gold) !important; }
+.bg-soft-gold-light { background-color: var(--color-soft-gold-light) !important; }
+.bg-soft-gold-dark { background-color: var(--color-soft-gold-dark) !important; }
+
+.text-pantone-276c { color: var(--color-pantone-276c) !important; }
+.text-pantone-276c-light { color: var(--color-pantone-276c-light) !important; }
+.text-pantone-276c-dark { color: var(--color-pantone-276c-dark) !important; }
+.text-soft-gold { color: var(--color-soft-gold) !important; }
+.text-soft-gold-light { color: var(--color-soft-gold-light) !important; }
+.text-soft-gold-dark { color: var(--color-soft-gold-dark) !important; }
+
+.border-pantone-276c { border-color: var(--color-pantone-276c) !important; }
+.border-soft-gold { border-color: var(--color-soft-gold) !important; }
+
+/* Gradient utilities */
+.gradient-pantone-gold {
+  background: linear-gradient(135deg, var(--color-pantone-276c), var(--color-soft-gold)) !important;
+}
+
+.gradient-pantone-light {
+  background: linear-gradient(135deg, var(--color-pantone-276c-light), var(--color-pantone-276c)) !important;
+}
+
+/* Focus ring utilities */
+.focus\:ring-soft-gold:focus {
+  --tw-ring-color: var(--color-soft-gold);
+}
+
+/* Hover utilities */
+.hover\:bg-soft-gold:hover { background-color: var(--color-soft-gold) !important; }
+.hover\:bg-soft-gold-dark:hover { background-color: var(--color-soft-gold-dark) !important; }
+.hover\:text-soft-gold:hover { color: var(--color-soft-gold) !important; }
+.hover\:border-soft-gold:hover { border-color: var(--color-soft-gold) !important; }

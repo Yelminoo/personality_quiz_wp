@@ -216,35 +216,35 @@ const QuizResults: React.FC<QuizResultsProps> = ({ answers, email, calculatedRes
   const styleHint = getStyleHints();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 p-6">
+    <div className="min-h-screen bg-white p-6">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Your Symbol Reading</h1>
-          <p className="text-xl text-white/90">Your personal symbols have been revealed</p>
+        <div className="text-center mb-8 bg-pantone-276c text-white py-8 px-6 rounded-xl">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">Your Symbol Reading</h1>
+          <p className="text-xl opacity-90">Your personal symbols have been revealed</p>
         </div>
 
         {/* Theme Card */}
-        <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 mb-8">
+        <div className="bg-gray-50 border border-soft-gold/30 rounded-2xl p-8 mb-8 shadow-lg">
           <div className="text-center mb-6">
-            <h2 className="text-3xl font-bold text-white mb-2">{displayResults.themeName}</h2>
-            <p className="text-lg text-white/90">{displayResults.themeDescription}</p>
+            <h2 className="text-3xl font-bold text-pantone-276c mb-2">{displayResults.themeName}</h2>
+            <p className="text-lg text-gray-700">{displayResults.themeDescription}</p>
           </div>
 
           {/* Featured Symbols */}
           <div className="mb-8">
-            <h3 className="text-xl font-semibold text-white mb-4">Your Primary Symbols:</h3>
+            <h3 className="text-xl font-semibold text-pantone-276c mb-4">Your Primary Symbols:</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {displayResults.featuredSymbols.map((symbol, index) => (
-                <div key={index} className="bg-white/10 rounded-lg p-4">
+                <div key={index} className="bg-white rounded-lg p-4 border border-soft-gold/20 shadow-sm">
                   <div className="flex justify-between items-start mb-1">
-                    <h4 className="font-semibold text-white text-lg">{symbol.name}</h4>
+                    <h4 className="font-semibold text-pantone-276c text-lg">{symbol.name}</h4>
                     {'weight' in symbol && (
-                      <span className="text-yellow-400 text-sm font-medium">★ {symbol.weight}</span>
+                      <span className="text-soft-gold text-sm font-medium">★ {symbol.weight}</span>
                     )}
                   </div>
-                  <p className="text-white/80 text-sm">{symbol.meaning}</p>
-                  <p className="text-white/60 text-xs mt-1">Shape: {symbol.shape}</p>
+                  <p className="text-gray-700 text-sm">{symbol.meaning}</p>
+                  <p className="text-gray-500 text-xs mt-1">Shape: {symbol.shape}</p>
                 </div>
               ))}
             </div>
@@ -253,18 +253,18 @@ const QuizResults: React.FC<QuizResultsProps> = ({ answers, email, calculatedRes
           {/* Supporting Symbols */}
           {displayResults.supportingSymbols.length > 0 && (
             <div className="mb-8">
-              <h3 className="text-xl font-semibold text-white mb-4">Supporting Symbols:</h3>
+              <h3 className="text-xl font-semibold text-pantone-276c mb-4">Supporting Symbols:</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {displayResults.supportingSymbols.map((symbol, index) => (
-                  <div key={index} className="bg-white/10 rounded-lg p-4 border-l-4 border-blue-400">
+                  <div key={index} className="bg-white rounded-lg p-4 border-l-4 border-soft-gold shadow-sm">
                     <div className="flex justify-between items-start mb-1">
-                      <h4 className="font-semibold text-white text-lg">{symbol.name}</h4>
+                      <h4 className="font-semibold text-pantone-276c text-lg">{symbol.name}</h4>
                       {'weight' in symbol && (
-                        <span className="text-blue-400 text-sm font-medium">★ {symbol.weight}</span>
+                        <span className="text-soft-gold text-sm font-medium">★ {symbol.weight}</span>
                       )}
                     </div>
-                    <p className="text-white/80 text-sm">{symbol.meaning}</p>
-                    <p className="text-white/60 text-xs mt-1">Shape: {symbol.shape}</p>
+                    <p className="text-gray-700 text-sm">{symbol.meaning}</p>
+                    <p className="text-gray-500 text-xs mt-1">Shape: {symbol.shape}</p>
                   </div>
                 ))}
               </div>
@@ -272,14 +272,14 @@ const QuizResults: React.FC<QuizResultsProps> = ({ answers, email, calculatedRes
           )}
 
           {/* Style Hint */}
-          <div className="bg-white/5 rounded-lg p-4 mb-6">
-            <h3 className="text-lg font-semibold text-white mb-2">Your Style Preference:</h3>
-            <p className="text-white/90">{styleHint}</p>
+          <div className="bg-soft-gold/10 rounded-lg p-4 mb-6 border border-soft-gold/20">
+            <h3 className="text-lg font-semibold text-pantone-276c mb-2">Your Style Preference:</h3>
+            <p className="text-gray-700">{styleHint}</p>
           </div>
         </div>
 
         {/* Next Steps */}
-        <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 text-center">
+        <div className="bg-pantone-276c rounded-2xl p-8 text-center shadow-lg">
           <h3 className="text-2xl font-bold text-white mb-4">Ready to Create Your Talisman?</h3>
           <p className="text-white/90 mb-6">
             Work with our designers to translate your symbols into a custom piece of jewelry that tells your story.
@@ -294,15 +294,15 @@ const QuizResults: React.FC<QuizResultsProps> = ({ answers, email, calculatedRes
           )}
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-white/20 hover:bg-white/30 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 hover:transform hover:-translate-y-1">
+            <button className="bg-soft-gold hover:bg-soft-gold-dark text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 hover:transform hover:-translate-y-1">
               Start Custom Design
             </button>
-            <button className="bg-transparent border border-white/30 hover:border-white/50 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300">
+            <button className="bg-transparent border border-soft-gold/50 hover:border-soft-gold text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300">
               Download PDF Report
             </button>
             <Link 
               to="/"
-              className="bg-transparent border border-white/30 hover:border-white/50 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 inline-block"
+              className="bg-transparent border border-soft-gold/50 hover:border-soft-gold text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 inline-block"
             >
               Learn More About Quiz
             </Link>

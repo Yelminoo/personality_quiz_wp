@@ -234,8 +234,8 @@ export default function PersonalityForm() {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 p-6">
-      <div className="w-full max-w-2xl bg-white/20 backdrop-blur-md border border-white/30 rounded-xl p-10 shadow-lg space-y-8">
+    <div className="flex items-center justify-center min-h-screen bg-white p-6">
+      <div className="w-full max-w-2xl bg-pantone-276c rounded-xl p-10 shadow-2xl space-y-8">
         <div className="text-center">
           <h1 className="text-3xl font-bold text-white mb-2">Discover Your NobArt Symbols</h1>
           <p className="text-lg text-white/90 mb-6">Your soul carries meaning. Let us reveal the symbols you're here to wear.</p>
@@ -255,7 +255,7 @@ export default function PersonalityForm() {
                   value={email}
                   onChange={e => setEmail(e.target.value)}
                   placeholder="your-email@example.com"
-                  className="w-full border border-white/50 rounded px-3 py-3 bg-white/10 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  className="w-full border border-white/50 rounded px-3 py-3 bg-white/10 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-soft-gold"
                 />
               </div>
             );
@@ -273,7 +273,7 @@ export default function PersonalityForm() {
                       checked={(answers[q.id] || []).includes(opt)}
                       onChange={() => handleChange(q.id, opt, q.multiple, q.maxSelections)}
                       disabled={q.multiple && q.maxSelections ? !(answers[q.id] || []).includes(opt) && (answers[q.id] || []).length >= q.maxSelections : false}
-                      className="h-5 w-5 text-blue-400 disabled:opacity-50"
+                      className="h-5 w-5 text-soft-gold disabled:opacity-50"
                     />
                     <span className={`text-white ${q.multiple && q.maxSelections && !(answers[q.id] || []).includes(opt) && (answers[q.id] || []).length >= q.maxSelections ? 'opacity-50' : ''}`}>{opt}</span>
                   </label>
@@ -287,7 +287,7 @@ export default function PersonalityForm() {
         <button
           onClick={handleSubmit}
           disabled={loading}
-          className="w-full py-3 px-6 bg-white/20 hover:bg-white/30 text-white font-semibold rounded-lg shadow-md disabled:bg-gray-400/50 transition-all duration-300"
+          className="w-full py-3 px-6 bg-soft-gold hover:bg-soft-gold-dark text-white font-semibold rounded-lg shadow-md disabled:bg-gray-400/50 transition-all duration-300"
         >
           {loading ? "Generating Your Symbols..." : "Discover My Symbols"}
         </button>
