@@ -43,17 +43,32 @@ const WhatThisQuizIs: React.FC = () => {
     }
   ];
   return (
-    <div className="bg-white">
-      <div className="max-w-6xl mx-auto px-4 py-8 text-gray-800 leading-relaxed">
+    <div className="bg-white relative">
+      {/* Watermark Background */}
+      <div 
+        className="fixed inset-0 opacity-8 bg-no-repeat bg-center pointer-events-none z-0"
+        style={{
+          backgroundImage: `url('/watermark/STAMP 35x35mm-01.png')`,
+          backgroundSize: '280px 280px',
+          backgroundPosition: 'center center'
+        }}
+      />
+      <div className="max-w-6xl mx-auto px-4 py-8 text-gray-800 leading-relaxed relative z-10">
         {/* Hero Section */}
         <section className="text-center mb-16 py-12 bg-pantone-276c text-white rounded-xl">
           <h1 className="text-5xl mb-4 font-light">What This Quiz Is</h1>
-          <p className="text-xl max-w-4xl mx-auto opacity-95">
+          <p className="text-xl max-w-4xl mx-auto opacity-95 mb-8">
             Your jewelry shouldn't just look good—it should mean something. The NobArt Symbol Discovery Quiz 
             helps you uncover the 3–5 personal symbols that match your current chapter in life: freedom, love, 
             resilience, purpose, and more. In 2–3 minutes, you'll receive a short reading with symbols, meanings, 
             and suggested shapes you can turn into a custom piece.
           </p>
+          <Link 
+            to="/quiz"
+            className="inline-block bg-soft-gold text-white hover:bg-soft-gold-dark px-8 py-4 text-lg rounded-md font-semibold hover:transform hover:-translate-y-1 transition-all duration-300 shadow-lg"
+          >
+            Start Your Quiz
+          </Link>
         </section>
 
         {/* Why Take It Section */}
@@ -287,17 +302,17 @@ const WhatThisQuizIs: React.FC = () => {
 
       {/* Contact CTA */}
       <section className="text-center bg-pantone-276c text-white py-12 rounded-xl mt-12">
-        <h2 className="text-4xl mb-4 text-white border-b-2 border-soft-gold/50 pb-2 inline-block">Ready to Discover Your Symbols?</h2>
-        <p className="text-lg mb-8">Please provide your contact information to proceed.</p>
-        <Link 
-          to="/quiz"
-          className="inline-block bg-soft-gold text-white hover:bg-soft-gold-dark px-8 py-4 text-lg rounded-md font-semibold hover:transform hover:-translate-y-1 transition-all duration-300 shadow-lg"
-        >
-          Start Your Quiz
-        </Link>
+        <h2 className="text-4xl mb-4 text-white border-b-2 border-soft-gold/50 pb-2 inline-block">Questions About Your Symbol Journey?</h2>
+          <p className="text-lg mb-4">We're here to help you discover the perfect symbols for your story.</p>
+           <Link 
+            to="/quiz"
+            className="inline-block bg-soft-gold text-white hover:bg-soft-gold-dark px-8 py-4 text-lg rounded-md font-semibold hover:transform hover:-translate-y-1 transition-all duration-300 shadow-lg"
+          >
+            Start Your Quiz
+          </Link>
       </section>
-      </div>
     </div>
+  </div>
   );
 };
 

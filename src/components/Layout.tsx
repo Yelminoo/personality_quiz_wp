@@ -17,8 +17,12 @@ const Layout: React.FC = () => {
         <div className="max-w-6xl mx-auto px-4">
           <div className="flex justify-between items-center py-4">
             {/* Logo/Brand */}
-            <Link to="/" className="text-2xl font-bold text-white hover:text-soft-gold transition-colors">
-              NobArt
+            <Link to="/" className="flex items-center hover:opacity-80 transition-opacity">
+              <img 
+                src="/logo/Nouveau__Jewelry Logo.png" 
+                alt="NobArt Logo" 
+                className="h-16 w-auto"
+              />
             </Link>
 
             {/* Navigation Links */}
@@ -58,7 +62,13 @@ const Layout: React.FC = () => {
         <div className="max-w-6xl mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
-              <h3 className="text-xl font-semibold mb-4 text-soft-gold">NobArt</h3>
+              <div className="mb-4">
+                <img 
+                  src="/logo/Nouveau__Jewelry Logo.png" 
+                  alt="NobArt Logo" 
+                  className="h-25 w-auto"
+                />
+              </div>
               <p className="text-gray-200">
                 Discover your personal symbols and create meaningful jewelry that tells your story.
               </p>

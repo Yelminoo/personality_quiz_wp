@@ -234,8 +234,20 @@ export default function PersonalityForm() {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-white p-6">
-      <div className="w-full max-w-2xl bg-pantone-276c rounded-xl p-10 shadow-2xl space-y-8">
+    <div className="flex items-center justify-center min-h-screen bg-white p-6 relative">
+      {/* Fixed watermark at center of screen over everything */}
+      <div 
+        className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-25 pointer-events-none z-50"
+        style={{
+          backgroundImage: `url('/watermark/STAMP 35x35mm-01.png')`,
+          backgroundSize: '250px 250px',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center',
+          width: '250px',
+          height: '250px'
+        }}
+      />
+      <div className="w-full max-w-2xl bg-pantone-276c rounded-xl p-10 shadow-2xl space-y-8 relative z-10">
         <div className="text-center">
           <h1 className="text-3xl font-bold text-white mb-2">Discover Your NobArt Symbols</h1>
           <p className="text-lg text-white/90 mb-6">Your soul carries meaning. Let us reveal the symbols you're here to wear.</p>

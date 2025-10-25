@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { ShapeIcon } from '../assets/symbols';
 
 interface Symbol {
   name: string;
@@ -216,8 +217,17 @@ const QuizResults: React.FC<QuizResultsProps> = ({ answers, email, calculatedRes
   const styleHint = getStyleHints();
 
   return (
-    <div className="min-h-screen bg-white p-6">
-      <div className="max-w-4xl mx-auto">
+    <div className="min-h-screen bg-white p-6 relative">
+      {/* Watermark Background */}
+      <div 
+        className="fixed inset-0 opacity-15 bg-no-repeat bg-center pointer-events-none z-30"
+        style={{
+          backgroundImage: `url('/watermark/STAMP 35x35mm-01.png')`,
+          backgroundSize: '400px 400px',
+          backgroundPosition: 'center center'
+        }}
+      />
+      <div className="max-w-4xl mx-auto relative z-10">
         {/* Header */}
         <div className="text-center mb-8 bg-pantone-276c text-white py-8 px-6 rounded-xl">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">Your Symbol Reading</h1>
@@ -236,15 +246,22 @@ const QuizResults: React.FC<QuizResultsProps> = ({ answers, email, calculatedRes
             <h3 className="text-xl font-semibold text-pantone-276c mb-4">Your Primary Symbols:</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {displayResults.featuredSymbols.map((symbol, index) => (
-                <div key={index} className="bg-white rounded-lg p-4 border border-soft-gold/20 shadow-sm">
-                  <div className="flex justify-between items-start mb-1">
-                    <h4 className="font-semibold text-pantone-276c text-lg">{symbol.name}</h4>
+                <div key={index} className="bg-white rounded-lg p-4 border border-soft-gold/20 shadow-sm hover:shadow-md transition-shadow">
+                  <div className="flex justify-between items-start mb-3">
+                    <div className="flex items-center gap-3">
+                      <div className="flex-shrink-0 p-3 bg-soft-gold/10 rounded-lg">
+                        <ShapeIcon shapeName={symbol.shape} size={32} className="text-soft-gold" />
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-pantone-276c text-lg">{symbol.name}</h4>
+                        <p className="text-sm text-gray-500">Shape: {symbol.shape}</p>
+                      </div>
+                    </div>
                     {'weight' in symbol && (
-                      <span className="text-soft-gold text-sm font-medium">★ {symbol.weight}</span>
+                      <span className="text-soft-gold text-lg font-bold">★ {symbol.weight}</span>
                     )}
                   </div>
                   <p className="text-gray-700 text-sm">{symbol.meaning}</p>
-                  <p className="text-gray-500 text-xs mt-1">Shape: {symbol.shape}</p>
                 </div>
               ))}
             </div>
@@ -256,15 +273,20 @@ const QuizResults: React.FC<QuizResultsProps> = ({ answers, email, calculatedRes
               <h3 className="text-xl font-semibold text-pantone-276c mb-4">Supporting Symbols:</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {displayResults.supportingSymbols.map((symbol, index) => (
-                  <div key={index} className="bg-white rounded-lg p-4 border-l-4 border-soft-gold shadow-sm">
-                    <div className="flex justify-between items-start mb-1">
-                      <h4 className="font-semibold text-pantone-276c text-lg">{symbol.name}</h4>
+                  <div key={index} className="bg-white rounded-lg p-4 border-l-4 border-soft-gold shadow-sm hover:shadow-md transition-shadow">
+                    <div className="flex justify-between items-start mb-2">
+                      <div className="flex items-center gap-2">
+                        <div className="flex-shrink-0">
+                          <ShapeIcon shapeName={symbol.shape} size={24} className="text-soft-gold" />
+                        </div>
+                        <h4 className="font-semibold text-pantone-276c text-lg">{symbol.name}</h4>
+                      </div>
                       {'weight' in symbol && (
-                        <span className="text-soft-gold text-sm font-medium">★ {symbol.weight}</span>
+                        <span className="text-soft-gold text-lg font-bold">★ {symbol.weight}</span>
                       )}
                     </div>
-                    <p className="text-gray-700 text-sm">{symbol.meaning}</p>
-                    <p className="text-gray-500 text-xs mt-1">Shape: {symbol.shape}</p>
+                    <p className="text-gray-700 text-sm mb-2">{symbol.meaning}</p>
+                    <p className="text-gray-500 text-xs">Shape: {symbol.shape}</p>
                   </div>
                 ))}
               </div>
