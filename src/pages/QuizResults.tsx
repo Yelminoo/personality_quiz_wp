@@ -160,6 +160,205 @@ const symbolMetadata: Record<string, { meaning: string; shape: string }> = {
 };
 
 const QuizResults: React.FC<QuizResultsProps> = ({ answers, email, calculatedResults }) => {
+  // Print function - captures screen content for printing (ONE A4 PAGE)
+  const handlePrint = () => {
+    // Add print-specific styles to the page
+    const printStyles = document.createElement('style');
+    printStyles.innerHTML = `
+      @media print {
+        @page { 
+          size: A4 portrait; 
+          margin: 8mm; 
+        }
+        
+        /* Hide non-printable elements */
+        nav, footer, .no-print, button {
+          display: none !important;
+        }
+        
+        /* Show only printable content - CLEAN FLEX LAYOUT */
+        #printable-results {
+          display: flex !important;
+          flex-direction: column;
+          position: relative;
+          background: white;
+          padding: 12px !important;
+          margin: 0;
+          width: 100%;
+          max-width: none;
+          font-size: 9pt;
+          line-height: 1.3;
+          gap: 12px;
+        }
+        
+        /* Add watermark */
+        #printable-results::before {
+          content: '';
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background-image: url('/logo/Nouveau__Jewelry Logo.png');
+          background-repeat: no-repeat;
+          background-size: 60px auto;
+          background-position: center;
+          width: 60px;
+          height: 60px;
+          opacity: 0.05;
+          z-index: -1;
+        }
+        
+        /* Clean container for all content */
+        .print-content {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          height: auto;
+        }
+        
+        /* Remove all theme card styling for print */
+        .bg-gray-50 {
+          background: transparent !important;
+          border: none !important;
+          padding: 0 !important;
+          margin: 0 !important;
+          box-shadow: none !important;
+          border-radius: 0 !important;
+        }
+        
+        /* Show print-only elements */
+        .print-only {
+          display: block !important;
+        }
+        
+        /* Hide screen-only elements */
+        .screen-only {
+          display: none !important;
+        }
+        
+        /* COMPACT Typography for single page */
+        .print-header {
+          text-align: center;
+          margin-bottom: 12px;
+          border-bottom: 1px solid #1E213D;
+          padding-bottom: 8px;
+        }
+        
+        .print-header h2 {
+          color: #1E213D;
+          font-size: 14pt;
+          margin: 0;
+          font-weight: bold;
+        }
+        
+        .section-print h3 {
+          color: #1E213D;
+          font-size: 10pt;
+          font-weight: bold;
+          margin: 8px 0 4px 0;
+          border-left: 2px solid #D4A574;
+          padding-left: 4px;
+        }
+        
+        /* FLEXBOX LAYOUT symbol cards - TWO PER ROW */
+        .symbols-print {
+          width: 100%;
+        }
+        
+        .symbol-row {
+          display: flex;
+          width: 100%;
+          gap: 8px;
+          margin-bottom: 8px;
+        }
+        
+        .symbol-print {
+          background: #f9f9f9;
+          border: 1px solid #e0e0e0;
+          border-radius: 4px;
+          padding: 8px;
+          page-break-inside: avoid;
+          flex: 1;
+          min-width: 0;
+          box-sizing: border-box;
+          font-size: 9pt;
+        }
+        
+        .symbol-print-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          border-bottom: 1px solid #e0e0e0;
+          padding-bottom: 4px;
+        }
+        
+        .symbol-print h4 {
+          color: #1E213D;
+          font-size: 10pt;
+          font-weight: bold;
+          margin: 0;
+        }
+        
+        .symbol-print .weight {
+          color: #D4A574;
+          font-size: 9pt;
+          font-weight: bold;
+        }
+        
+        .symbol-print p {
+          color: #444;
+          font-size: 8pt;
+          line-height: 1.3;
+          margin: 0;
+        }
+        
+        .symbol-print .shape {
+          color: #666;
+          font-size: 7pt;
+          font-style: italic;
+          margin-top: 2px;
+        }
+        
+        .style-print {
+          background: #fff3e0;
+          padding: 6px;
+          border: 1px solid #D4A574;
+          margin-top: 8px;
+        }
+        
+        .style-print h3 {
+          color: #1E213D;
+          font-size: 9pt;
+          margin: 0 0 3px 0;
+          border: none;
+          padding: 0;
+        }
+        
+        .style-print p {
+          color: #444;
+          font-size: 8pt;
+          margin: 0;
+        }
+        
+        /* Ensure everything fits on one page */
+        * {
+          page-break-after: avoid !important;
+          page-break-before: avoid !important;
+          page-break-inside: avoid !important;
+        }
+      }
+    `;
+    document.head.appendChild(printStyles);
+    
+    // Trigger print
+    window.print();
+    
+    // Remove styles after printing
+    setTimeout(() => {
+      document.head.removeChild(printStyles);
+    }, 1000);
+  };
+
   // Use calculated results if available, otherwise fallback to old logic
   const getDisplayResults = () => {
     if (calculatedResults && calculatedResults.featured.length > 0) {
@@ -230,23 +429,64 @@ const QuizResults: React.FC<QuizResultsProps> = ({ answers, email, calculatedRes
       <div className="max-w-4xl mx-auto relative z-10">
         {/* Header */}
         <div className="text-center mb-8 bg-pantone-276c text-white py-8 px-6 rounded-xl">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Your Symbol Reading</h1>
-          <p className="text-xl opacity-90">Your personal symbols have been revealed</p>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">Your Personal Symbol Profile</h1>
         </div>
 
-        {/* Theme Card */}
-        <div className="bg-gray-50 border border-soft-gold/30 rounded-2xl p-8 mb-8 shadow-lg">
-          <div className="text-center mb-6">
+        {/* Printable Results Section */}
+        <div id="printable-results" className="print-content">
+          {/* Theme Card */}
+          <div className="bg-gray-50 border border-soft-gold/30 rounded-2xl p-8 mb-8 shadow-lg">
+          <div className="text-center mb-6 screen-only">
             <h2 className="text-3xl font-bold text-pantone-276c mb-2">{displayResults.themeName}</h2>
             <p className="text-lg text-gray-700">{displayResults.themeDescription}</p>
           </div>
 
           {/* Featured Symbols */}
-          <div className="mb-8">
-            <h3 className="text-xl font-semibold text-pantone-276c mb-4">Your Primary Symbols:</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="mb-8 section-print">
+            <h3 className="text-xl font-semibold text-pantone-276c mb-4 screen-only">Your Primary Symbols:</h3>
+            <h3 className="print-only" style={{ display: 'none' }}>Your Primary Symbols</h3>
+            
+            <div className="symbols-print print-only" style={{ display: 'none' }}>
+              {Array.from({ length: Math.ceil(displayResults.featuredSymbols.length / 2) }, (_, rowIndex) => (
+                <div key={`row-${rowIndex}`} className="symbol-row">
+                  {[0, 1].map(cellIndex => {
+                    const symbolIndex = rowIndex * 2 + cellIndex;
+                    const symbol = displayResults.featuredSymbols[symbolIndex];
+                    if (!symbol) return <div key={`empty-${cellIndex}`} className="symbol-print" style={{border: 'none', background: 'transparent'}}></div>;
+                    
+                    return (
+                      <div key={`print-${symbolIndex}`} className="symbol-print">
+                        <div className="symbol-print-header">
+                          <h4>{symbol.name}</h4>
+                          {'weight' in symbol && (
+                            <span className="weight">★ {symbol.weight}</span>
+                          )}
+                        </div>
+                        <p>{symbol.meaning}</p>
+                        <p className="shape">Shape: {symbol.shape}</p>
+                      </div>
+                    );
+                  })}
+                </div>
+              ))}
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 screen-only">
               {displayResults.featuredSymbols.map((symbol, index) => (
                 <div key={index} className="bg-white rounded-lg p-4 border border-soft-gold/20 shadow-sm hover:shadow-md transition-shadow">
+                  {/* Print version */}
+                  <div className="symbol-card" style={{ display: 'none' }}>
+                    <div className="symbol-header">
+                      <h4 className="symbol-name">{symbol.name}</h4>
+                      {'weight' in symbol && (
+                        <span className="symbol-weight">★ {symbol.weight}</span>
+                      )}
+                    </div>
+                    <p className="symbol-meaning">{symbol.meaning}</p>
+                    <p className="symbol-shape">Shape: {symbol.shape}</p>
+                  </div>
+                  
+                  {/* Screen version */}
                   <div className="flex justify-between items-start mb-3">
                     <div className="flex items-center gap-3">
                       <div className="flex-shrink-0 p-3 bg-soft-gold/10 rounded-lg">
@@ -269,9 +509,36 @@ const QuizResults: React.FC<QuizResultsProps> = ({ answers, email, calculatedRes
 
           {/* Supporting Symbols */}
           {displayResults.supportingSymbols.length > 0 && (
-            <div className="mb-8">
-              <h3 className="text-xl font-semibold text-pantone-276c mb-4">Supporting Symbols:</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="mb-8 section-print">
+              <h3 className="text-xl font-semibold text-pantone-276c mb-4 screen-only">Supporting Symbols:</h3>
+              <h3 className="print-only" style={{ display: 'none' }}>Supporting Symbols</h3>
+              
+              <div className="symbols-print print-only" style={{ display: 'none' }}>
+                {Array.from({ length: Math.ceil(displayResults.supportingSymbols.length / 2) }, (_, rowIndex) => (
+                  <div key={`support-row-${rowIndex}`} className="symbol-row">
+                    {[0, 1].map(cellIndex => {
+                      const symbolIndex = rowIndex * 2 + cellIndex;
+                      const symbol = displayResults.supportingSymbols[symbolIndex];
+                      if (!symbol) return <div key={`support-empty-${cellIndex}`} className="symbol-print" style={{border: 'none', background: 'transparent'}}></div>;
+                      
+                      return (
+                        <div key={`support-print-${symbolIndex}`} className="symbol-print">
+                          <div className="symbol-print-header">
+                            <h4>{symbol.name}</h4>
+                            {'weight' in symbol && (
+                              <span className="weight">★ {symbol.weight}</span>
+                            )}
+                          </div>
+                          <p>{symbol.meaning}</p>
+                          <p className="shape">Shape: {symbol.shape}</p>
+                        </div>
+                      );
+                    })}
+                  </div>
+                ))}
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 screen-only">
                 {displayResults.supportingSymbols.map((symbol, index) => (
                   <div key={index} className="bg-white rounded-lg p-4 border-l-4 border-soft-gold shadow-sm hover:shadow-md transition-shadow">
                     <div className="flex justify-between items-start mb-2">
@@ -298,10 +565,17 @@ const QuizResults: React.FC<QuizResultsProps> = ({ answers, email, calculatedRes
             <h3 className="text-lg font-semibold text-pantone-276c mb-2">Your Style Preference:</h3>
             <p className="text-gray-700">{styleHint}</p>
           </div>
+          
+          {/* Print Style Section */}
+          <div className="style-section" style={{ display: 'none' }}>
+            <h3 className="style-title">Your Style Preference</h3>
+            <p className="style-description">{styleHint}</p>
+          </div>
         </div>
+        </div> {/* End Printable Results Section */}
 
         {/* Next Steps */}
-        <div className="bg-pantone-276c rounded-2xl p-8 text-center shadow-lg">
+        <div className="bg-pantone-276c rounded-2xl p-8 text-center shadow-lg screen-only">
           <h3 className="text-2xl font-bold text-white mb-4">Ready to Create Your Talisman?</h3>
           <p className="text-white/90 mb-6">
             Work with our designers to translate your symbols into a custom piece of jewelry that tells your story.
@@ -319,8 +593,11 @@ const QuizResults: React.FC<QuizResultsProps> = ({ answers, email, calculatedRes
             <button className="bg-soft-gold hover:bg-soft-gold-dark text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 hover:transform hover:-translate-y-1">
               Start Custom Design
             </button>
-            <button className="bg-transparent border border-soft-gold/50 hover:border-soft-gold text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300">
-              Download PDF Report
+            <button 
+              onClick={handlePrint}
+              className="bg-transparent border border-soft-gold/50 hover:border-soft-gold text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300"
+            >
+              🖨️ Download PDF Report
             </button>
             <Link 
               to="/"
@@ -332,7 +609,7 @@ const QuizResults: React.FC<QuizResultsProps> = ({ answers, email, calculatedRes
         </div>
 
         {/* Share Section */}
-        <div className="text-center mt-8">
+        <div className="text-center mt-8 screen-only">
           <p className="text-white/70 text-sm">
             Love your results? Share your journey with others who might need to discover their symbols.
           </p>

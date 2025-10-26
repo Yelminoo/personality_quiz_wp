@@ -86,7 +86,7 @@ export const ShapeIcon: React.FC<{
   return (
     <div className={`inline-flex items-center justify-center ${className}`} style={{ width: size, height: size }}>
       <img 
-        src={`/src/assets/symbols/shapes/${svgFile}`}
+        src={`/symbols/shapes/${svgFile}`}
         alt={shapeName}
         width={size}
         height={size}
